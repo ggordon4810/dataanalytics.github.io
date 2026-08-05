@@ -240,44 +240,73 @@ def validate_columns(dataframe, x_column, y_column, error_column=None):
     return df_copy
 
 def parse_optional_float(value, field_name):
-      
+    """
+    Convert an optional form value into a float.
+
+    Args:
+        value: Value entered by the user.
+        field_name: Name used in the error message.
+
+    Returns:
+        A float when a value is provided, otherwise None.
+
+    Raises:
+        ValueError: If the value cannot be converted to a float.
+    """
+
     if value is None:
-          return None
+        return None
+
+    # Convert the value to a string and remove whitespace.
     value = str(value).strip()
 
-    # Remove leading and trailing whitespace.
-    value = str('value').strip()
-
+    # An empty optional field becomes None.
     if not value:
-      return None
+        return None
 
-    # Try to convert the value into a float.
     try:
-      return float(value)
-
-    except ValueError:
-      raise ValueError ("field name must be a valid number)
-
-
+        return float(value)
+    except ValueError as exc:
+        raise ValueError(
+            f"{field_name} must be a valid number."
+        ) from exc
 
 
 def parse_positive_integer(value, field_name, default=None):
-    if value is None:
-      return default
+    """
+    Convert an optional form value into a positive integer.
 
+    Args:
+        value: Value entered by the user.
+        field_name: Name used in the error message.
+        default: Value returned when the field is empty.
+
+    Returns:
+        A positive integer or the supplied default value.
+
+    Raises:
+        ValueError: If the value is not a positive whole number.
+    """
+
+    if value is None:
+        return default
+
+    # Convert the value to a string and remove whitespace.
     value = str(value).strip()
 
-  
     if not value:
-      return default
+        return default
 
-    # Try to convert value into an integer.
     try:
-      return int(value)
-    except ValueError:
-      raise ValueError (f"{field_name} must be a whole number")
-    
-    if value <= 0:
-      raise ValueError (f {<field_name} must begreater than zero")
-    
-    return value
+        integer_value = int(value)
+    except ValueError as exc:
+        raise ValueError(
+            f"{field_name} must be a whole number."
+        ) from exc
+
+    if integer_value <= 0:
+        raise ValueError(
+            f"{field_name} must be greater than zero."
+        )
+
+    return integer_value
