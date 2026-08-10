@@ -1,1 +1,36 @@
+{% extends "layout.html" %} 
+{% block title %} 
+  Error | FigureForge 
+{% endblock %} 
 
+{% block main %} 
+<section class="page-header"> 
+  <h1>Something went wrong.</h1> 
+    <p> 
+      FigureForge could not complete that request. 
+    </p> 
+</section> 
+<section class="card"> 
+  <div 
+    class="alert alert-error" 
+    role="alert" 
+    > 
+      {{ message|default("An unexpected error occurred.") }} 
+  </div> 
+  <div class="form-actions"> 
+    <a 
+      href="{{ url_for('index') }}" 
+      class="button primary-button" 
+    > 
+      Return Home
+    </a> 
+    
+    <a 
+      href="{{ url_for('upload') }}" 
+      class="button secondary-button" 
+    > 
+      Upload New Data 
+    </a> 
+  </div> 
+</section> 
+{% endblock %}
