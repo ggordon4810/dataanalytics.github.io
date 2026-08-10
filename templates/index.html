@@ -1,1 +1,127 @@
+{% extends "layout.html" %} 
 
+{% block title %} 
+  FigureForge | Scientific Graph Generator 
+{% endblock %} 
+
+{% block main %} 
+
+<section class="hero">
+  <div>
+    <h1> 
+      Turn research data into publication-quality figures. 
+    </h1> 
+    
+    <p>
+      FigureForge helps researchers create clean, customizable scientific plots without writing plotting code. Upload a CSV or enter data manually, configure your figure, and export it in a publication-ready format. 
+    </p> 
+    
+    <div class="hero-actions"> 
+      <a 
+        href="{{ url_for('upload') }}" 
+        class="button primary-button" 
+      > 
+        Upload CSV 
+      </a> 
+      
+      <a 
+        href="{{ url_for('manual_entry') }}" 
+        class="button secondary-button"
+      > 
+        Enter Data Manually 
+      </a>
+      
+    </div>
+  </div>
+  
+  <aside class="hero-panel"> 
+    <h2> 
+      Built for scientific workflows 
+    </h2> 
+    
+    <ul> 
+      <li>Scatter, line, and bar plots</li> 
+      <li>Optional error bars</li> 
+      <li>Custom titles and axis labels</li>
+      <li>Publication-resolution output</li> 
+      <li>PNG, SVG, and PDF export</li> 
+    </ul> 
+  </aside> 
+
+</section> 
+
+<section> 
+  
+  <div class="page-header"> 
+    <h2 class="section-title"> 
+      How FigureForge works 
+    </h2> 
+    
+    <p class="section-description"> 
+      Create a finished scientific figure in three steps. 
+    </p> 
+  </div> 
+  
+  <div class="grid three-column-grid"> 
+    <article class="card feature-card">
+      <div class="feature-icon"> 
+        1 
+      </div> 
+      
+      <h3> 
+        Provide your data 
+      </h3> 
+      
+      <p> 
+        Upload a CSV containing your experimental measurements or enter values manually. 
+      </p> 
+    
+    </article> 
+    
+    <article class="card feature-card"> 
+      <div class="feature-icon"> 
+        2 
+      </div> 
+      
+      <h3> 
+        Configure the figure 
+      </h3>
+      
+      <p> 
+        Select your X and Y variables, graph type, error bars, labels, size, and output settings. 
+      </p> 
+    
+    </article> 
+    
+    <article class="card feature-card"> 
+      
+      <div class="feature-icon"> 
+        3 
+      </div>
+      
+      <h3> 
+        Preview and export 
+      </h3> 
+      
+      <p> 
+        Review the generated figure and download a high-resolution version for reports, posters, or publications. 
+      </p> 
+    
+    </article> 
+  
+  </div>
+
+</section> 
+
+<section class="card"> 
+  
+  <h2> 
+    Designed for research data 
+  </h2> 
+  
+  <p> 
+    FigureForge focuses on plotting tasks commonly used in scientific and engineering research. It provides a simple interface while retaining control over dimensions, resolution, error bars, and output format. 
+  </p> 
+
+</section> 
+{% endblock %}
