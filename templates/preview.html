@@ -1,1 +1,172 @@
+{% extends "layout.html" %} 
 
+{% block title %} 
+Figure Preview | FigureForge 
+{% endblock %} 
+
+{% block main %} 
+
+<section class="page-header"> 
+	
+	<h1> 
+		Your figure is ready. 
+	</h1> 
+	
+	<p> 
+		Review the generated graph and download the publication-quality output. 
+	</p> 
+</section> 
+
+{% if error %} 
+	<div class="alert alert-error" role="alert"> 
+		{{ error }} 
+	</div> 
+{% endif %} 
+
+<div class="preview-layout"> 
+	
+	<section class="graph-preview"> 
+		
+		{% if preview_url %} 
+		
+			<img 
+				src="{{ preview_url }}" 
+				alt="Generated scientific figure preview" 
+			> 
+		
+		{% elif image_data %} 
+		
+			<img 
+				src="data:image/png;base64,{{ image_data }}" 
+				alt="Generated scientific figure preview" 
+			> 
+		
+		{% else %} 
+		
+			<div> 
+				<h2> 
+					No preview available 
+				</h2> 
+				
+				<p> 
+					FigureForge generated the file, but a browser preview could not be displayed. 
+				</p> 
+			</div> 
+		{% endif %} 
+	</section> 
+	<aside class="preview-sidebar"> 
+		<div class="card"> 
+			<h2> 
+				Figure Details 
+			</h2> 
+			<div class="result-list"> 
+				{% if graph_type %} 
+					<div class="result-row"> 
+						<span class="result-label"> 
+							Graph type 
+						</span> 
+						
+						<span class="result-value"> 
+							{{ graph_type|title }} 
+						</span> 
+					</div> 
+				{% endif %} 
+				{% if x_column %} 
+					<div class="result-row"> 
+						<span class="result-label"> 
+							X-axis 
+						</span> 
+						
+						<span class="result-value"> 
+							{{ x_column }} 
+						</span> 
+					</div> 
+				{% endif %} 
+				{% if y_column %} 
+					<div class="result-row"> 
+						<span class="result-label"> 
+							Y-axis 
+						</span> 
+						<span class="result-value"> 
+							{{ y_column }} 
+						</span> 
+					
+					</div> 
+				
+				{% endif %} 
+				
+				{% if output_format %} 
+					
+					<div class="result-row"> 
+						<span class="result-label"> 
+							Format 
+						</span> 
+						
+						<span class="result-value"> 
+							{{ output_format|upper }} 
+						</span> 
+					</div> 
+				{% endif %} 
+				{% if dpi %} 
+					<div class="result-row"> 
+						<span class="result-label"> 
+							Resolution 
+						</span>
+						<span class="result-value"> 
+							{{ dpi }} DPI 
+						</span> 
+					</div> 
+				{% endif %} 
+			</div> 
+			<div class="form-actions"> 
+				{% if filename %} 
+					<a 
+						href="{{ url_for('download', filename=filename) }}" 
+						class="button primary-button" 
+					> 
+						Download Figure 
+					</a> 
+				{% endif %} 
+				<a 
+					href="{{ url_for('upload') }}" 
+					class="button secondary-button" 
+				> 
+					Create Another 
+				</a> 
+			</div> 
+		</div> 
+	</aside> 
+</div> 
+{% if data_preview %} 
+<section class="card"> 
+	<h2> 
+		Plotted Data 
+	</h2> 
+	
+	<div class="table-container"> 
+		<table class="preview-table"> 
+			<thead> 
+				<tr> 
+					{% for column in data_preview[0].keys() %} 
+						<th> 
+							{{ column }} 
+						</th> 
+					{% endfor %} 
+				</tr> 
+			</thead> 
+			<tbody> 
+				{% for row in data_preview %} 
+					<tr> 
+						{% for value in row.values() %} 
+							<td> 
+								{{ value }} 
+							</td> 
+						{% endfor %} 
+					</tr> 
+				{% endfor %} 
+			</tbody> 
+		</table> 
+	</div> 
+</section> 
+{% endif %} 
+{% endblock %}
