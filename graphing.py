@@ -346,7 +346,7 @@ def save_figure(
 
     return save_path
 
- def create_graph(
+def create_graph(
     graph_type,
     dataframe,
     x_column,
