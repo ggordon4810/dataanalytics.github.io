@@ -1,68 +1,68 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 
-{% block title %} 
-Manual Data Entry | FigureForge 
-{% endblock %} 
+{% block title %}
+Manual Data Entry | FigureForge
+{% endblock %}
 
 {% block main %}
 
-<section class="page-header"> 
-  
-  <h1> 
-    Enter data manually 
-  </h1> 
-  
-  <p>
-    Enter your X and Y measurements below. Error values are optional. 
-  </p> 
+<section class="page-header">
 
-</section> 
-<section class="card"> 
-  
-  {% if error %} 
-    <div class="alert alert-error" role="alert"> 
-      {{ error }} 
-    </div> 
-  {% endif %} 
-  
-  <form 
-    method="post" 
+  <h1>
+    Enter data manually
+  </h1>
+
+  <p>
+    Enter your X and Y measurements below. Error values are optional.
+  </p>
+
+</section>
+<section class="card">
+
+  {% if error %}
+    <div class="alert alert-error" role="alert">
+      {{ error }}
+    </div>
+  {% endif %}
+
+  <form
+    method="post"
     data-show-loading="true"
-  > 
-    
-    <div class="table-container"> 
-      
-      <table class="data-entry-table"> 
-        
-        <thead> 
-          <tr> 
-            <th>#</th> 
-            <th>X Value</th> 
-            <th>Y Value</th> 
-            <th>Error</th> 
-            <th>Action</th> 
-          </tr> 
-        </thead> 
-        
-        <tbody id="data-rows"> 
-          
-          <tr> 
-            
+  >
+
+    <div class="table-container">
+
+      <table class="data-entry-table">
+
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>X Value</th>
+            <th>Y Value</th>
+            <th>Error</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="data-rows">
+
+          <tr>
+
             <td class="row-number">
-              1 
+              1
             </td>
-            
-            <td> 
+
+            <td>
               <input
                 type="text"
                 id="x-value-1"
                 name="x_value"
                 placeholder="X value"
                 required
-              > 
-            </td> 
-            
-            <td> 
+              >
+            </td>
+
+            <td>
               <input
                 type="number"
                 id="y-value-1"
@@ -70,10 +70,10 @@ Manual Data Entry | FigureForge
                 step="any"
                 placeholder="Y value"
                 required
-              > 
-            </td> 
-            
-            <td> 
+              >
+            </td>
+
+            <td>
               <input
                 type="number"
                 id="error-value-1"
@@ -81,90 +81,198 @@ Manual Data Entry | FigureForge
                 step="any"
                 min="0"
                 placeholder="Optional"
-              > 
+              >
             </td>
-            
-            <td> 
-              <button 
-                type="button" 
-                class="danger-button small-button remove-data-row" 
-                disabled 
-              > 
-                Remove 
-              </button> 
-            </td> 
-          
-          </tr> 
-          
-          <tr> 
-            <td class="row-number">
-              2 
-            </td>
-            
-            <td> 
-              <input 
-                type="text" 
-                id="x-value-2" 
-                name="x_value" 
-                placeholder="X value" 
-                required 
-              > 
-            </td> 
-            
-            <td> 
-              <input 
-                type="number" 
-                id="y-value-2" 
-                name="y_value" 
-                step="any" 
-                placeholder="Y value" 
-                required 
-              > 
-            </td> 
-            <td> 
-              <input
-                type="number" 
-                id="error-value-2" 
-                name="error_value" 
-                step="any" min="0" 
-                placeholder="Optional"
-              > 
-            </td> 
-            
-            <td> 
-              <button 
-                type="button" 
-                class="danger-button small-button remove-data-row" 
-                disabled 
-              > 
-                Remove 
-              </button> 
-            </td> 
-          </tr> 
-        </tbody> 
-      </table> 
-    </div> 
-    
-    <div class="form-actions"> 
-      <button 
-        type="button" 
-        id="add-data-row" 
-        class="secondary-button" 
-      > 
-        Add Row 
-      
-      </button> 
-      
-      <button 
-        type="submit" 
-        class="primary-button"
-      > 
-        Continue 
-      </button> 
-    
-    </div> 
-  
-  </form> 
 
-</section> 
+            <td>
+              <button
+                type="button"
+                class="danger-button small-button remove-data-row"
+                disabled
+              >
+                Remove
+              </button>
+            </td>
+
+          </tr>
+
+          <tr>
+            <td class="row-number">
+              2
+            </td>
+
+            <td>
+              <input
+                type="text"
+                id="x-value-2"
+                name="x_value"
+                placeholder="X value"
+                required
+              >
+            </td>
+
+            <td>
+              <input
+                type="number"
+                id="y-value-2"
+                name="y_value"
+                step="any"
+                placeholder="Y value"
+                required
+              >
+            </td>
+            <td>
+              <input
+                type="number"
+                id="error-value-2"
+                name="error_value"
+                step="any" min="0"
+                placeholder="Optional"
+              >
+            </td>
+
+            <td>
+              <button
+                type="button"
+                class="danger-button small-button remove-data-row"
+                disabled
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        id="add-data-row"
+        class="secondary-button"
+      >
+        Add Row
+
+      </button>
+
+      <button
+        type="submit"
+        class="primary-button"
+      >
+        Continue
+      </button>
+
+    </div>
+
+  </form>
+
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const tableBody = document.getElementById("data-rows");
+    const addButton = document.getElementById("add-data-row");
+
+    if (!tableBody || !addButton) {
+        return;
+    }
+
+    function updateRemoveButtons() {
+        const rows = tableBody.querySelectorAll("tr");
+        const removeButtons =
+            tableBody.querySelectorAll(".remove-data-row");
+
+        removeButtons.forEach(function (button) {
+            button.disabled = rows.length <= 2;
+        });
+    }
+
+    addButton.addEventListener("click", function () {
+        const rowNumber =
+            tableBody.querySelectorAll("tr").length + 1;
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td class="row-number">${rowNumber}</td>
+
+            <td>
+                <input
+                    type="text"
+                    name="x_value"
+                    placeholder="X value"
+                    required
+                >
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    name="y_value"
+                    step="any"
+                    placeholder="Y value"
+                    required
+                >
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    name="error_value"
+                    step="any"
+                    min="0"
+                    placeholder="Optional"
+                >
+            </td>
+
+            <td>
+                <button
+                    type="button"
+                    class="danger-button small-button remove-data-row"
+                >
+                    Remove
+                </button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+
+        updateRemoveButtons();
+    });
+
+    tableBody.addEventListener("click", function (event) {
+        const removeButton =
+            event.target.closest(".remove-data-row");
+
+        if (!removeButton) {
+            return;
+        }
+
+        const rows = tableBody.querySelectorAll("tr");
+
+        if (rows.length <= 2) {
+            return;
+        }
+
+        removeButton.closest("tr").remove();
+
+        const remainingRows =
+            tableBody.querySelectorAll("tr");
+
+        remainingRows.forEach(function (row, index) {
+            const numberCell =
+                row.querySelector(".row-number");
+
+            if (numberCell) {
+                numberCell.textContent = index + 1;
+            }
+        });
+
+        updateRemoveButtons();
+    });
+
+    updateRemoveButtons();
+});
+</script>
 {% endblock %}
+
