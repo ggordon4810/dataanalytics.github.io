@@ -20,24 +20,27 @@
 ## Images
 ## Home Page
 
-![Dashboard](images/dashboard.jpg)
+![Dashboard](images/Dashboard.jpg)
 
-## Experiment Log
+## Project Description
 
-![Experiment Log](images/Experiments.jpg)
+![Experiment Log](images/Description.jpg)
 
-## New Experiments
+## Data Upload
 
-![New Experiments](images/NewExperiment.jpg)
+![New Experiments](images/DataUpload.jpg)
 
-## Relaxivity
+## Manual Entry
 
-![Relaxivity](images/Relaxivity.jpg)
+![Relaxivity](images/ManualEntry.jpg)
 
-## DLS
+## Graph Settings
 
-![DLS](images/DLS.jpg)
+![Graph Settings](images/GraphingOptions.jpg)
+![Graph Settings](images/GraphingOptions2.jpg)
 
+## Example Graphs
+![Example Graphs](images/ExampleGraph.jpg)
 # Running FigureForge Locally
 
 ## Prerequisites
