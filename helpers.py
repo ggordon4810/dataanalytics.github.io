@@ -5,35 +5,21 @@ import pandas as pd
 
 from werkzeug.utils import secure_filename
 
-ALLOWED_EXTENSIONS = {"csv"} 
+
+ALLOWED_EXTENSIONS = {"csv"}
 
 
 def allowed_file(filename):
-    """
-    Check whether a filename has an allowed file extension.
-
-    Args:
-        filename (str): Name of the uploaded file.
-
-    Returns:
-        bool: True if the file extension is allowed, otherwise False.
-    """
-
-    # Check that the filename is a string.
     if not isinstance(filename, str):
         return False
 
-    # Check that the filename contains a file extension.
     if "." not in filename:
         return False
 
-    # Split the filename into the name and extension.
     name, extension = filename.rsplit(".", 1)
 
-    # Convert the extension to lowercase.
     extension = extension.lower()
 
-    # Return whether the extension is allowed.
     return extension in ALLOWED_EXTENSIONS
 
 def generate_safe_filename(filename):
@@ -61,35 +47,17 @@ def generate_safe_filename(filename):
 
 
 def validate_uploaded_file(file):
-    """
-    Validate that an uploaded file exists and is a supported CSV file.
-
-    Args:
-        file: The uploaded file object from Flask's request.files.
-
-    Returns:
-        True if the file is valid.
-
-    Raises:
-        ValueError: If the file is missing or has an invalid extension.
-    """
-
-    # Check that a file was uploaded.
     if file is None:
         raise ValueError("No file was uploaded.")
 
-    # Check that the filename exists.
     if not file.filename:
-        raise ValueError("Please select a file to upload.")
+        raise ValueError("Please select a CSV file.")
 
-    # Remove leading and trailing whitespace.
     filename = file.filename.strip()
 
-    # Check that the filename is not empty.
     if not filename:
-        raise ValueError("Please select a file to upload.")
+        raise ValueError("Please select a CSV file.")
 
-    # Check that the file has an allowed extension.
     if not allowed_file(filename):
         raise ValueError("Only CSV files are supported.")
 
@@ -125,32 +93,38 @@ def read_csv_file(filepath):
     raise ValueError ("Every column must have a unique name")
   return df
 
-def validate_columns(dataframe, x_column, y_column, error_column=None):
+def validate_columns(
+    dataframe,
+    x_column,
+    y_column,
+    error_column=None
+):
     """
-    Validate selected columns and return a cleaned copy of the data.
+    Validate selected columns and return a cleaned copy
+    of the data.
 
     Args:
-        dataframe: pandas DataFrame containing the uploaded data.
+        dataframe: pandas DataFrame containing the data.
         x_column: Name of the selected X-axis column.
         y_column: Name of the selected Y-axis column.
-        error_column: Optional name of the error-bar column.
+        error_column: Optional error-bar column.
 
     Returns:
-        A cleaned pandas DataFrame containing the selected columns.
+        A cleaned pandas DataFrame containing only the
+        selected columns.
 
     Raises:
-        ValueError: If the selections or data are invalid.
+        ValueError: If the selected columns or data are invalid.
     """
 
     # Check that a dataset is available.
     if dataframe is None or dataframe.empty:
         raise ValueError("The dataset is not available.")
 
-    # Check that an X-axis column was selected.
+    # Check that X and Y columns were selected.
     if x_column is None or not str(x_column).strip():
         raise ValueError("An X-axis column is required.")
 
-    # Check that a Y-axis column was selected.
     if y_column is None or not str(y_column).strip():
         raise ValueError("A Y-axis column is required.")
 
@@ -164,7 +138,7 @@ def validate_columns(dataframe, x_column, y_column, error_column=None):
         if not error_column:
             error_column = None
 
-    # Check that the selected columns exist.
+    # Check that selected columns exist.
     if x_column not in dataframe.columns:
         raise ValueError(
             f"The selected X-axis column '{x_column}' was not found."
@@ -175,54 +149,80 @@ def validate_columns(dataframe, x_column, y_column, error_column=None):
             f"The selected Y-axis column '{y_column}' was not found."
         )
 
-    if error_column is not None and error_column not in dataframe.columns:
+    if (
+        error_column is not None
+        and error_column not in dataframe.columns
+    ):
         raise ValueError(
             f"The selected error-bar column '{error_column}' was not found."
         )
 
-    # Check that X and Y are different columns.
+    # X and Y cannot be the same column.
     if x_column == y_column:
-        raise ValueError("X and Y must use different columns.")
+        raise ValueError(
+            "X and Y must use different columns."
+        )
 
-    # Create a list of the selected columns.
-    selected_columns = [x_column, y_column]
+    # Error column must be different from X and Y.
+    if error_column is not None:
+        if error_column == x_column or error_column == y_column:
+            raise ValueError(
+                "The error-bar column must be different "
+                "from the X and Y columns."
+            )
+
+    # Build a list of selected columns.
+    selected_columns = [
+        x_column,
+        y_column
+    ]
 
     if error_column is not None:
         selected_columns.append(error_column)
 
-    # Create a copy containing only the selected columns.
+    # Create a copy of only the selected data.
     df_copy = dataframe[selected_columns].copy()
 
-    # Convert the Y column to numeric values.
+    # Convert the Y column to numeric.
     df_copy[y_column] = pd.to_numeric(
         df_copy[y_column],
         errors="coerce"
     )
 
-    # Convert the optional error column to numeric values.
+    # Convert the error column to numeric if present.
     if error_column is not None:
         df_copy[error_column] = pd.to_numeric(
             df_copy[error_column],
             errors="coerce"
         )
 
-    # Attempt to convert the X column to numeric values.
+    # Attempt to convert X values to numeric.
     numeric_x = pd.to_numeric(
         df_copy[x_column],
         errors="coerce"
     )
 
-    # Use numeric X values only if every nonmissing X value converted.
-    if numeric_x.notna().sum() == df_copy[x_column].notna().sum():
+    # If every nonmissing X value converted successfully,
+    # use the numeric version.
+    original_nonmissing = df_copy[x_column].notna().sum()
+    numeric_nonmissing = numeric_x.notna().sum()
+
+    if numeric_nonmissing == original_nonmissing:
         df_copy[x_column] = numeric_x
 
-    # Remove rows with missing X or Y values.
-    required_columns = [x_column, y_column]
+    # Determine which columns are required.
+    required_columns = [
+        x_column,
+        y_column
+    ]
 
     if error_column is not None:
         required_columns.append(error_column)
 
-    df_copy = df_copy.dropna(subset=required_columns)
+    # Remove rows containing missing required values.
+    df_copy = df_copy.dropna(
+        subset=required_columns
+    )
 
     # Require at least two valid rows.
     if len(df_copy) < 2:
@@ -310,3 +310,4 @@ def parse_positive_integer(value, field_name, default=None):
         )
 
     return integer_value
+
