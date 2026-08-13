@@ -41,6 +41,8 @@
 
 ## Example Graphs
 ![Example Graphs](images/ExampleGraph.jpg)
+![Example Graphs](images/ExampleGraph2.jpg)
+![Example Graphs](images/ExampleGraph3.jpg)
 # Running FigureForge Locally
 
 ## Prerequisites
