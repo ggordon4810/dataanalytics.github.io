@@ -5,16 +5,15 @@ from numpy.polynomial import Polynomial
 def calculate_mean(values):
    # Check that values was provided.
     if values is None:
-      raise ValueError ("Value is required.")   
+      raise ValueError ("Value is required.")
 
     arr = np.array(values, dtype=float)
 
     cleaned_arr = arr[~np.isnan(arr)]
-    
-    if len(cleaned_arr) == 0::
+
+    if len(cleaned_arr) == 0:
       raise ValueError ("Numeric data is required")
 
-    Calculate the arithmetic mean.
     total = 0
     for i in range (len(cleaned_arr)):
       total += cleaned_arr[i]
@@ -25,7 +24,7 @@ def calculate_mean(values):
 def calculate_standard_deviation(values):
 
     if values is None:
-      raise ValueError ("Value is required.")   
+      raise ValueError ("Value is required.")
 
     arr = np.array(values, dtype=float)
 
@@ -37,7 +36,7 @@ def calculate_standard_deviation(values):
     total = 0
     for i in range(len(cleaned_arr)):
       total += (cleaned_arr[i] - mean) ** 2
-    
+
     standard_dev = np.sqrt(total / (len(cleaned_arr) - 1))
 
     return float(standard_dev)
@@ -45,7 +44,7 @@ def calculate_standard_deviation(values):
 def calculate_standard_error(values):
 
     if values is None:
-      raise ValueError ("Value is required.")   
+      raise ValueError ("Value is required.")
 
     arr = np.array(values, dtype=float)
 
@@ -69,7 +68,7 @@ def calculate_r_squared(actual_values, predicted_values):
 
     if len(actual) < 2:
       raise ValueError ("At least two values are required.")
-    
+
     actual_mean = calculate_mean(actual)
 
     sumofsq = 0
@@ -94,7 +93,7 @@ def calculate_linear_regression(x_values, y_values):
 
     if x_values is None:
       raise ValueError ("An x value is required.")
-      
+
     if y_values is None:
       raise ValueError ("A y value is required.")
 
@@ -112,7 +111,7 @@ def calculate_linear_regression(x_values, y_values):
 
 
     line_fit = Polynomial.fit(x_values, y_values, deg=1)
-    
+
     intercept, slope = line_fit.convert().coef
 
     predicted_y_values = []
@@ -127,7 +126,7 @@ def calculate_linear_regression(x_values, y_values):
       "intercept": float(intercept),
       "r_squared": r_squared,
       "predicted_values": predicted_y_values,
-      } 
+      }
     return values
 
 def generate_regression_line(
@@ -141,7 +140,7 @@ def generate_regression_line(
     if x_values is None:
       raise ValueError("X values are required.")
     x_values = np.array (x_values, dtype=float)
-    
+
     if len(x_values) < 2:
       raise ValueError ("At least two x values are required.")
 
@@ -178,34 +177,34 @@ def calculate_confidence_interval(
     #Check that confidence is greater than 0 and less than 1.
     if not 0 < confidence < 1:
       raise ValueError("Confidence must be between zero and one.")
-    
+
     # Calculate the sample size.
     sample_size = len(cleaned_arr)
-    
+
     # Degrees of freedom.
     degrees_of_freedom = sample_size - 1
-    
+
     # Calculate the mean.
     mean = calculate_mean(cleaned_arr)
-    
+
     # Calculate the standard error.
     standard_error = calculate_standard_error(cleaned_arr)
-    
+
     # Calculate the two-tailed critical t value.
     alpha = 1 - confidence
-    
+
     critical_t = scipy.stats.t.ppf(
         1 - alpha / 2,
         degrees_of_freedom
     )
-    
+
     # Calculate the margin of error.
     margin_of_error = critical_t * standard_error
-    
+
     # Calculate the confidence interval bounds.
     lower_bound = mean - margin_of_error
     upper_bound = mean + margin_of_error
-    
+
     # Return the results.
     results = {
         "mean": float(mean),
@@ -246,5 +245,6 @@ def summarize_numeric_data(values):
         "standard_deviation": (standard_deviation),
         "standard_error": (standard_error),
     }
-    
+
     return(results)
+
