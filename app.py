@@ -73,10 +73,8 @@ def upload():
         try:
             uploaded_file = request.files.get("file")
 
-            # Validate the uploaded file.
             validate_uploaded_file(uploaded_file)
 
-            # Generate a safe unique filename.
             safe_filename = generate_safe_filename(
                 uploaded_file.filename
             )
@@ -86,13 +84,11 @@ def upload():
                 safe_filename
             )
 
-            # Save the uploaded CSV.
             uploaded_file.save(filepath)
 
-            # Make sure the saved CSV contains usable data.
+            # Verify that the CSV can actually be read.
             read_csv_file(filepath)
 
-            # Store the current dataset filename.
             session["data_filename"] = safe_filename
 
             return redirect(url_for("configure"))
@@ -500,9 +496,9 @@ def internal_server_error(error):
     ), 500
 
 
-# --------------------------------------------------
-# Run Application
-# --------------------------------------------------
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    ) 
