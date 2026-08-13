@@ -2,6 +2,13 @@ import os
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+
+from helpers import (
+    generate_safe_filename,
+    parse_optional_float,
+    parse_positive_integer,
+)
 
 from calculations import calculate_linear_regression
 
@@ -18,7 +25,7 @@ def validate_graph_type(graph_type):
     raise ValueError ("Supported graph types are: scatter, line, and bar.")
 
   return graph_type
-    
+
 def validate_output_format(output_format):
     if output_format is None:
       output_format = "png"
@@ -45,7 +52,7 @@ def build_figure_settings(
       title = ""
     else:
       title = str(title).strip()
-      
+
     if x_label is None:
       x_label = ""
     else:
@@ -302,7 +309,7 @@ def create_bar_plot(
     apply_common_styling(ax, settings)
 
     return fig, ax
-  
+
 def save_figure(
     fig,
     output_directory,
@@ -398,5 +405,7 @@ def create_graph(
             settings,
             error_column
         )
+
+    return fig, ax
 
     return fig, ax
