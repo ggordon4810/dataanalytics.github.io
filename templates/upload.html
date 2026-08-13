@@ -1,94 +1,73 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 
-{% block title %} 
-Upload Data | FigureForge 
-{% endblock %} 
+{% block title %}
+Upload Data | FigureForge
+{% endblock %}
 
-{% block main %} 
+{% block main %}
 
-<section class="page-header"> 
-  
-  <h1> 
-    Upload your data 
-  </h1> 
-  
-  <p> 
-    Upload a CSV file containing the data you want to visualize. Your file should contain column headers and at least two columns. 
-  </p> 
+<section class="page-header">
+    <h1>Upload your data</h1>
 
-</section> 
+    <p>
+        Select a CSV file containing the data you want
+        to graph.
+    </p>
+</section>
 
-<section class="card"> 
-  
-  {% if error %} 
-    <div class="alert alert-error" role="alert"> 
-      {{ error }} 
-    </div> 
-  {% endif %} 
-  
-  <form 
-    method="post"
-    enctype="multipart/form-data" 
-    data-show-loading="true" 
-  > 
-    <div 
-      class="upload-zone" 
-      id="upload-zone" 
-      tabindex="0" 
-      role="button" 
-      aria-label="Choose CSV file"
-    > 
-      
-      <input 
-        type="file" 
-        id="csv-file" 
-        name="file" 
-        accept=".csv,text/csv"
-        required 
-      > 
-      
-      <div class="upload-icon">
-        ↑ 
-      </div> 
-      
-      <h3> 
-        Drop your CSV here 
-      </h3> 
-      
-      <p> 
-        or click to select a file 
-      </p> 
-      
-      <div
-        class="selected-file" 
-        id="selected-file" 
-      ></div>
-    
-    </div> 
-    
-    <p class="form-help"> 
-      Supported format: CSV. The file must contain at least two named columns and one or more rows of data. 
-    </p> 
-    
-    <div class="form-actions"> 
-      <button 
-        type="submit" 
-        class="primary-button" 
-      > 
-        Continue
-      </button>
-      
-      <a 
-        href="{{ url_for('manual_entry') }}" 
-        class="button secondary-button" 
-      > 
-        Enter Data Manually 
-      </a> 
-    
-    </div> 
-  
-  </form> 
+<section class="card">
 
-</section> 
+    {% if error %}
+        <div class="alert alert-error" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <div class="form-group">
+
+            <label for="csv-file">
+                Choose CSV File
+            </label>
+
+            <input
+                type="file"
+                id="csv-file"
+                name="file"
+                accept=".csv"
+                required
+            >
+
+            <p class="form-help">
+                Only CSV files are supported.
+            </p>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                Upload Data
+            </button>
+
+            <a
+                href="{{ url_for('manual_entry') }}"
+                class="button secondary-button"
+            >
+                Enter Data Manually
+            </a>
+
+        </div>
+
+    </form>
+
+</section>
 
 {% endblock %}
